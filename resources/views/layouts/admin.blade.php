@@ -21,10 +21,10 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col">
+    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex p-6 lg:p-8 items-center lg:justify-center min-h-screen flex-col mt-18">
         <header>  @yield('navegacion') </header>
         <main> @yield('contenido') </main>
-        <footer class="bg-white rounded-lg shadow-sm my-4 dark:bg-gray-800 min-w-screen">
+        <footer class="rounded-lg border-t-2 border-gray-200 border-b-2 bg-blue-100 shadow-sm my-4 dark:bg-gray-800 min-w-screen">
             <div class="w-full mx-auto max-w-screen p-4 md:flex md:items-center md:justify-between">
                 <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">&copy {{ now()->year }} Transvive</span>
                 <img src="{{ asset('images/transvive_logo.png')}}" alt="Logo Transvive">
