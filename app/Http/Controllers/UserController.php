@@ -8,11 +8,19 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     public function index()
     {
+        $users = User::paginate(10);
+
         //Mostrar vista de usuarios
-        return view('user.index');
+        return view('user.index', [
+            'users' => $users
+        ]);
     }
 
     public function create()
@@ -29,7 +37,7 @@ class UserController extends Controller
         //Validar datos
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|',
+            'email' => 'string|email|max:255|',
             'user' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
             'role' => 'required'
