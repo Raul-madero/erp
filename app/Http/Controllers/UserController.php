@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
+use App\Models\Role;
 
 class UserController extends Controller
 {
@@ -12,15 +14,29 @@ class UserController extends Controller
     {
         $this->middleware('auth');
     }
-    //
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::paginate(10);
-
+        Log::info('Search term: ' . $request->input('search'));
         //Mostrar vista de usuarios
-        return view('user.index', [
-            'users' => $users
-        ]);
+        $search = $request->input('search');
+
+        $users = User::with('role')
+            ->when($search, function ($query, $search) {
+                return $query->where('name', 'like', '%' . $search . '%')
+                             ->orWhere('user', 'like', '%' . $search . '%')
+                             ->orWhereHas('role', function ($query) use ($search) {
+                                 $query->where('role', 'like', '%' . $search . '%');
+                             });
+            })
+            ->paginate(10);  // Paginación
+
+        // Si la solicitud es AJAX, devolver solo la tabla
+        if ($request->ajax()) {
+            return view('user.table', ['users' => $users]);
+        }
+
+        // De lo contrario, devolver la vista completa
+        return view('user.index', ['users' => $users]);
     }
 
     public function create()
@@ -40,14 +56,14 @@ class UserController extends Controller
             'email' => 'string|email|max:255|',
             'user' => 'required|string|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'required'
+            'id_role' => 'required'
         ]);
 
         User::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'user' => $request->get('user'),
-            'role' => $request->get('role'),
+            'id_role' => $request->get('role'),
             'password' => bcrypt($request->get('password')),
         ]);
         //Redireccionar a la vista de usuarios
@@ -58,7 +74,8 @@ class UserController extends Controller
     {
         //Mostrar vista de editar usuario
         $user = User::findOrFail($id);
-        return view('user.edit', compact('user'));
+        $roles = Role::all();
+        return view('user.edit', compact(['user', 'roles']));
     }
     public function update(Request $request, $id)
     {
@@ -67,16 +84,16 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|',
-            'user' => 'required|string|max:255|unique:users,user,' . $user->id,
+            'user' => 'required',
             'password' => 'nullable|string|min:8|confirmed',
-            'role' => 'required'
+            'id_role' => 'required'
         ]);
 
         $user->update([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'user' => $request->get('user'),
-            'role' => $request->get('role'),
+            'id_role' => $request->get('id_role'),
             'password' => bcrypt($request->get('password')),
         ]);
         //Redireccionar a la vista de usuarios
