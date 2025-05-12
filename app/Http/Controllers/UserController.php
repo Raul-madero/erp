@@ -16,7 +16,7 @@ class UserController extends Controller
     }
     public function index(Request $request)
     {
-        Log::info('Search term: ' . $request->input('search'));
+        // Log::info('Search term: ' . $request->input('search'));
         //Mostrar vista de usuarios
         $search = $request->input('search');
 

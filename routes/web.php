@@ -17,3 +17,9 @@ Route::post('/usuarios/{id}', [UserController::class, 'update'])->name('user.upd
 Route::delete('/usuarios/{id}', [UserController::class, 'destroy'])->name('user.destroy');
 
 Route::get('/requisiciones', [RequisicionesController::class, 'index'])->name('requisiciones');
+Route::get('/requisiciones/create', [RequisicionesController::class, 'create'])->name('requisiciones.create');
+Route::post('/requisiciones', [RequisicionesController::class,'store']);
+Route::get('/requisiciones/{id}', [RequisicionesController::class, 'show'])->name('requisiciones.show');
+Route::get('/requisiciones/{id}/edit', [RequisicionesController::class, 'edit'])->name('requisiciones.edit');
+Route::put('/requisiciones/{id}', [RequisicionesController::class, 'update'])->name('requisiciones.update');
+Route::delete('/requisiciones/{id}', [RequisicionesController::class, 'destroy'])->name('requisiciones.destroy');

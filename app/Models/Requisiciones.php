@@ -15,7 +15,7 @@ class Requisiciones extends Model
 
     public function departamento()
     {
-        return $this->belongsTo(Departamento::class)->selected('id', 'nombre');
+        return $this->belongsTo(Departamento::class, 'id_departamento');
     }
 
     public function user()

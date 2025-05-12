@@ -9,6 +9,6 @@ class Departamento extends Model
     //
     public function requisiciones()
     {
-        return $this->hasMany(Requisiciones::class);
+        return $this->hasMany(Requisiciones::class)->selected('id', 'nombre');
     }
 }

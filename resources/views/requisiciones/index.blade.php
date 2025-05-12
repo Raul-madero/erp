@@ -13,8 +13,32 @@
         <div>
             <x-search url="{{ route('requisiciones') }}" placeholder="Buscar requisicion" fields="no_requisicion, fecha, estatus, role" />
         </div>
-        <div id="userTable" class="relative overflow-x-auto shadow-md">
+        <div id="requisiciones" class="relative overflow-x-auto shadow-md">
             @include('requisiciones.table', ['requisiciones' => $requisiciones])
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $document.ready(function () {
+            $('#searchInput').on('keyup', function() {
+                let search = $(this).val();
+
+                //Enviar solicitud AJAX
+                $.ajax({
+                    url: "{{ route('requisiciones') }}",
+                    method: 'GET',
+                    data: {
+                        search: search
+                    },
+                    success: function(response) {
+                        // Actualizar la tabla con los nuevos resultados
+                        $('#requisiciones').html(response);
+                    }
+                })
+            })
+        });
+    </script>
 @endsection
