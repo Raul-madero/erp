@@ -21,7 +21,7 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center lg:justify-center min-h-screen flex-col mt-0 box-border">
+    <body class="bg-[#FDFDFC] dark:bg-[#0a0a0a] text-[#1b1b18] flex items-center lg:justify-center min-h-screen flex-col my-0 box-border">
         <header>  @yield('navegacion') </header>
         <main class="w-full mx-auto mt-24 mb-12 relative"> @yield('contenido') </main>
         <footer class="rounded-lg border-t-2 border-gray-200 border-b-2 bg-blue-100 shadow-sm my-4 dark:bg-gray-800 min-w-screen">
@@ -30,6 +30,7 @@
                 <img src="{{ asset('images/transvive_logo.png')}}" alt="Logo Transvive">
             </div>
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
         <script src="https://unpkg.com/flowbite@2.3.0/dist/flowbite.min.js"></script>
         <script>
             // Esto es para manejar los dropdowns en Tailwind y Flowbite

@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Requisiciones extends Model
 {
     //
+
+    protected $fillable = [
+        'fecha',
+        'fecha_requiere',
+        'fecha_entrega',
+        'id_almacen',
+        'id_departamento',
+        'id_user',
+        'id_proveedores',
+        'estado'
+    ];
     public function almacen()
     {
         return $this->belongsTo(Almacen::class)->selected('id', 'nombre');

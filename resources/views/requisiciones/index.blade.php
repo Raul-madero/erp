@@ -10,8 +10,9 @@
 
 @section('contenido')
     <div class="container mx-auto mt-4">
-        <div>
+        <div class="flex gap-2 justify-between items-center">
             <x-search url="{{ route('requisiciones') }}" placeholder="Buscar requisicion" fields="no_requisicion, fecha, estatus, role" />
+            <a href="{{ route('requisiciones.create')}}" class="text-green-900 dark:text-green-300">Nueva requisicion</a>
         </div>
         <div id="requisiciones" class="relative overflow-x-auto shadow-md">
             @include('requisiciones.table', ['requisiciones' => $requisiciones])
